@@ -1,8 +1,6 @@
 #
-# SSL keys must reside in /etc/ssl/private
-#  * cert.pem
-#  * cert-key.pem
-#  * cert-chain.pem
+# If you don't specify any certs folder a selfsigned certificate will be used.
+# Only use the selfsigned certificate for testing.
 #
 
 # Use oldee stable
@@ -20,10 +18,10 @@ ENV APACHE_LOCK_DIR  /var/lock
 ENV APACHE_LOG_DIR   /var/log/apache2
 ENV APACHE_CONFDIR   /etc/apache2
 
-# Add your own email
+# Change to your webmaster email
 ENV SERVER_ADMIN webmaster@localhost
 
-# Server name
+# Change to your servers FQDN
 ENV SERVER_NAME localhost
 
 # Strict transport age
@@ -35,25 +33,28 @@ ENV SSL_CIPHERS EECDH:EDH:AES:!aNULL:!eNULL:!LOW:!RC4:!3DES:!DES:!MD5:!EXP:!PSK:
 # Install apache2 and haveged for entropy
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y install apache2 openssl haveged && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-#RUN ln -sf /dev/stdout /var/log/nginx/access.log
-#RUN ln -sf /dev/stderr /var/log/nginx/error.log
-
-# Add redirection and ssl site
+# Configure apache servername
 RUN echo ServerName \${SERVER_NAME} > /etc/apache2/conf-available/servername.conf
 RUN a2enconf servername
+
+# Add ssl, rewrite, headers and proxy module
 RUN a2enmod ssl rewrite headers proxy_http
+
+# Remove default site
 RUN a2dissite 000-default
+
+# Add redirect from port 80 to ssl, and the ssl site
 ADD site-redirect.conf      /etc/apache2/sites-enabled/010-redirect.conf
 ADD site-ssl.conf           /etc/apache2/sites-enabled/020-ssl.conf
 
 # Expose both ports
 EXPOSE 80 443
 
-# Generate a a selfsigned certificate just for testing  if we don't find a one 
-# for $SERVER_NAME server
+# Generate a a selfsigned certificate just for testing using $SERVER_NAME 
+# as server name; valid for 365 after build of docker
 RUN test -f /etc/ssl/private/$SERVER_NAME.key || echo -n -e NO\\n.\\n.\\n.\\nWaffle Company Inc\\nBranding\\n$SERVER_NAME\\n$SERVER_ADMIN\\n | openssl req -x509 -newkey rsa:4096 -sha256 -keyout /etc/ssl/private/$SERVER_NAME.key -out /etc/ssl/private/$SERVER_NAME.cert -days 365 -nodes && ln -s /etc/ssl/private/$SERVER_NAME.cert /etc/ssl/private/$SERVER_NAME.chain
 
-# Expose logdir, html and cgi dir
+# Expose certificate directory
 VOLUME /etc/ssl/private
 
 # Run apache
