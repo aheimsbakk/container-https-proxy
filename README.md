@@ -1,6 +1,6 @@
-# What ssl-proxy
+# What is ssl-proxy
 
-ssl-proxy terminates a HTTPS connection for a linked dockers unencrypted web service. If you bind both ssl-proxy ports, 80 and 443, to the host - port 80 will redirect all requests to port 443. 
+ssl-proxy terminates a HTTPS connection for a linked dockers unencrypted web service. If you bind both ssl-proxy ports, 80 and 443 to the host, port 80 will redirect all requests to port 443. 
 
 ## ssl-proxy Docker image tags
 
@@ -38,9 +38,11 @@ ssl-proxy terminates a HTTPS connection for a linked dockers unencrypted web ser
 
 In `/etc/ssl/private` certificate filename is important to make Apache work with your own certificate. 
 
-* Private key `$SERVER_NAME`.key
-* Public certificate `$SERVER_NAME`.cert
-* Certificate chain `$SERVER_NAME`.chain
+* Private key file is `$SERVER_NAME.key`
+* Public certificate is `$SERVER_NAME.cert`
+* Certificate chain is `$SERVER_NAME.chain`
+
+Get the certificate chain from your CA if you don't have it at hand.
 
 ## Limits/caveats 
 
