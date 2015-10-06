@@ -4,7 +4,11 @@ ssl-proxy terminates a HTTPS connection for a linked dockers unencrypted web ser
 
 ## ssl-proxy Docker image tags
 
-* `ssl-proxy:1.0`, `ssl-proxy:latest`
+* `ssl-proxy:1.0.1`, `ssl-proxy:latest`
+
+    Updated documentation for docker. 
+
+* `ssl-proxy:1.0`
 
     Basic customizable SSL proxy based on `debian:jessie` and jessies version of Apache. Proxying port 80 is supported in this version.
 
