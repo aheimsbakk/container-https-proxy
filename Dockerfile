@@ -18,11 +18,11 @@ ENV APACHE_LOCK_DIR  /var/lock
 ENV APACHE_LOG_DIR   /var/log/apache2
 ENV APACHE_CONFDIR   /etc/apache2
 
-# Change to your webmaster email
-ENV SERVER_ADMIN webmaster@localhost
-
 # Change to your servers FQDN
 ENV SERVER_NAME localhost
+
+# Change to your webmaster email
+ENV SERVER_ADMIN webmaster@$SERVER_NAME
 
 # Strict transport age
 ENV SSL_STRICT_TRANSPORT max-age=31536000; includeSubDomains 
