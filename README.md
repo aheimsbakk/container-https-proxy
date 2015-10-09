@@ -2,13 +2,13 @@
 
 ssl-proxy terminates a HTTPS connection for a linked dockers unencrypted web service. If you bind both ssl-proxy ports, 80 and 443 to the host, port 80 will redirect all requests to port 443. 
 
-## ssl-proxy Docker image tags
+## Tags
 
-* `ssl-proxy:1.0.1`, `ssl-proxy:latest`
+* `1.0.1`, `latest`
 
     Updated documentation for docker. 
 
-* `ssl-proxy:1.0`
+* `1.0`
 
     Basic customizable SSL proxy based on `debian:jessie` and jessies version of Apache. Proxying port 80 is supported in this version.
 
