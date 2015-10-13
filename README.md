@@ -12,9 +12,9 @@ ssl-proxy terminates a HTTPS connection for a linked dockers unencrypted web ser
 
     Basic customizable SSL proxy based on `debian:jessie` and jessies version of Apache. Proxying port 80 is supported in this version.
 
-## Usage
+## Start ssl-proxy
 
-    docker run --name my-container-name --port 80:80 --port 443:443 --volume ./mycerts:/etc/ssl/private --environment SERVER_NAME=www.mydomain.com --link container-to-proxy:http -d ssl-proxy:latest
+    docker run --name my_proxy -p 80:80 -p 443:443 -v ./my_certs:/etc/ssl/private -e SERVER_NAME=www.mydomain.com --link www_container:http -d ssl-proxy:latest
 
 ### Environment variables
 
