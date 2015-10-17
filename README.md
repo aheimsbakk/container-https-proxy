@@ -4,7 +4,11 @@ ssl-proxy terminates a HTTPS connection for a linked dockers unencrypted web ser
 
 ## Tags
 
-* `1.0.1`, `latest`
+* `1.1`, `latest`
+
+    Added ProxyPreserveHost to config. 
+
+* `1.0.1`
 
     Updated documentation for docker. 
 
