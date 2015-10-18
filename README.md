@@ -2,9 +2,18 @@
 
 ssl-proxy terminates a HTTPS connection for a linked dockers unencrypted web service. If you bind both ssl-proxy ports, 80 and 443 to the host, port 80 will redirect all requests to port 443. 
 
-## Tags
+## Tagso
 
-* `1.1`, `latest`
+* `2.0`, `latest`
+
+    Apache header hardening with the following.
+
+        Header set X-Content-Type-Options "nosniff"
+        Header set X-XSS-Protection "1; mode=block"
+        Header set X-Robots-Tag "none"
+        Header set X-Frame-Options "SAMEORIGIN"
+
+* `1.1`
 
     Added ProxyPreserveHost to config. 
 
