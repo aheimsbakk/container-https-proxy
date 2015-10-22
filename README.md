@@ -4,7 +4,24 @@ ssl-proxy terminates a HTTPS connection for a linked dockers unencrypted web ser
 
 ## Tagso
 
-* `2.0`, `latest`
+* `latest`
+
+    Git master
+
+* `2.1`
+
+    Fixed generation of private SSL cert during build. 
+    Added certificate stapling in SSL config.
+
+        SSLUseStapling on 
+        SSLStaplingCache "shmcb:logs/stapling-cache(150000)" 
+        SSLStaplingResponseMaxAge 900 
+
+    Set SSL compression off in SSL config.
+
+        SSLCompression off
+
+* `2.0`
 
     Apache header hardening with the following.
 
@@ -41,7 +58,7 @@ ssl-proxy terminates a HTTPS connection for a linked dockers unencrypted web ser
 
 * `SSL_CIPHERS` - your preferred SSL ciphers
 
-    default: `EECDH:EDH:AES:!aNULL:!eNULL:!LOW:!RC4:!3DES:!DES:!MD5:!EXP:!PSK:!SRP:!DSS`
+    default: `EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH`
 
 * `SSL_STRICT_TRANSPORT` - strict transport options
 
