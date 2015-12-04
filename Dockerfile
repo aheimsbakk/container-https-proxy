@@ -18,6 +18,14 @@ ENV APACHE_LOCK_DIR  /var/lock
 ENV APACHE_LOG_DIR   /var/log/apache2
 ENV APACHE_CONFDIR   /etc/apache2
 
+# Will only allow one HTTP port if defined
+# Redirects to first PORT_HTTPS 
+ENV PORT_HTTP 80
+
+# Apache ports, more than one port mapping can be specified with space
+ENV PORT_HTTPS 443
+ENV PORT_REDIRECT 80
+
 # Change to your servers FQDN
 ENV SERVER_NAME localhost
 
@@ -44,11 +52,8 @@ RUN a2enmod ssl rewrite headers proxy_http
 RUN a2dissite 000-default
 
 # Add redirect from port 80 to ssl, and the ssl site
-ADD site-redirect.conf      /etc/apache2/sites-enabled/010-redirect.conf
-ADD site-ssl.conf           /etc/apache2/sites-enabled/020-ssl.conf
-
-# Expose both ports
-EXPOSE 80 443
+ADD site-redirect.conf      /etc/apache2/sites-available/redirect.conf
+ADD site-ssl.conf           /etc/apache2/sites-available/ssl.conf
 
 # Generate a a selfsigned certificate just for testing using $SERVER_NAME 
 # as server name; valid for 365 after build of docker
@@ -56,6 +61,12 @@ RUN test -f /etc/ssl/private/$SERVER_NAME.key || echo -n NO\\n.\\n.\\n.\\nWaffle
 
 # Expose certificate directory
 VOLUME /etc/ssl/private
+
+# Add entrypoint
+COPY docker-entrypoint.sh /
+
+# Entrypoint that generates APACHE site configuration for each LISTEN address mapping
+ENTRYPOINT ["/docker-entrypoint.sh"]
 
 # Run apache
 CMD ["apache2", "-DFOREGROUND"]
