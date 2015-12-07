@@ -8,6 +8,15 @@ ssl-proxy terminates a HTTPS connection for a linked dockers unencrypted web ser
 
     Git master
 
+* `3.0`
+
+    Added ability to redirect multiple ports.
+    New environment varibles as following.
+
+        PORT_HTTP 80
+        PORT_HTTPS 443
+        PORT_REDIRECT 80
+
 * `2.1`
 
     Fixed generation of private SSL cert during build. 
