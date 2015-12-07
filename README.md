@@ -64,6 +64,18 @@ ssl-proxy terminates a HTTPS connection for a linked dockers unencrypted web ser
 
     default: `max-age=31536000; includeSubDomains`
 
+* `PORT_HTTP` - port which accepts HTTP traffic and redirects to first `PORT_HTTPS`
+
+    default: `80`
+
+* `PORT_HTTPS` - port or space separated list of HTTPS ports
+
+    default: `443`
+
+* `PORT_REDIRECT` - maps one to one with PORTS_HTTPS, and redirect to port on linked container
+
+    default: `80`
+
 ### Volumes
 
 * `/etc/ssl/private` - where certificate resides
@@ -77,10 +89,5 @@ In `/etc/ssl/private` certificate filename is important to make Apache work with
 * Certificate chain is `${SERVER_NAME}.chain`
 
 Get the certificate chain from your CA if you don't have it at hand.
-
-## Limits/caveats 
-
-* Proxies only port 80 from linked container at the moment
-* Port 80 will always redirect to 443, not configurable at the moment
 
 ###### vim: set syn=markdown spell spl=en:
