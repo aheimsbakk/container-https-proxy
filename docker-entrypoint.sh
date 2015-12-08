@@ -26,7 +26,7 @@ for i in $(seq 0 $count); do
         sed -i "s/%PORT_HTTPS%/$port_https/g" /etc/apache2/sites-enabled/$i-redirect.conf
 
         # Don't extra listening if we don't need it
-        if [ $port_http -ne 80 -a $port_http -ne 443]; then
+        if [ $port_http -ne 80 -a $port_http -ne 443 ]; then
             echo Listen $port_http > /etc/apache2/conf-enabled/listen-${port_http}.conf
         fi
     fi
