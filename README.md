@@ -8,6 +8,12 @@ ssl-proxy terminates a HTTPS connection for a linked dockers unencrypted web ser
 
     Git master
 
+* `3.1`
+
+    Give the application a hint that it receives connection from a ssl proxy.
+
+        RequestHeader set X-Forwarded-Proto "https"
+
 * `3.0`
 
     Added ability to redirect multiple ports.
