@@ -2,11 +2,17 @@
 
 ssl-proxy terminates a HTTPS connection for a linked dockers unencrypted web service. If you bind both ssl-proxy ports, 80 and 443 to the host, port 80 will redirect all requests to port 443. 
 
-## Tagso
+## Tags
 
 * `latest`
 
-    Git master
+    Git master.
+
+* `3.2`
+
+	Added recommendations from [httpoxy.org](https://httpoxy.org/).
+
+		RequestHeader unset Proxy early
 
 * `3.1`
 
