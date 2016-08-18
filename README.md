@@ -1,6 +1,8 @@
-# What is ssl-proxy
+# ssl-proxy / A+ on sslabs.com
 
 ssl-proxy terminates a HTTPS connection for a linked dockers unencrypted web service. If you bind both ssl-proxy ports, 80 and 443 to the host, port 80 will redirect all requests to port 443. 
+
+This docker is configured to get **A+** on [sslabs.com](https://www.ssllabs.com/ssltest/).
 
 ## Tags
 
@@ -69,9 +71,43 @@ ssl-proxy terminates a HTTPS connection for a linked dockers unencrypted web ser
 
 ## Start ssl-proxy
 
-    docker run --name my_proxy -p 80:80 -p 443:443 -v ./my_certs:/etc/ssl/private -e SERVER_NAME=www.mydomain.com --link www_container:http -d ssl-proxy:latest
+### For testing
 
-### Environment variables
+    docker run -d --name my_proxy -p 80:80 -p 443:443 \
+		-v ./my_certs:/etc/ssl/private \
+        -e SERVER_NAME=www.mydomain.com \
+        -e SERVER_ADMIN=webmaster@mydomain.com \
+        --link www_container:http \
+		ssl-proxy:4
+
+### With letsencrypt.org certificate
+
+#### Start docker
+
+Start the docker with referering to letsencrypt.org certificate. 
+
+	docker run -d --name my_proxy -p 80:80 -p 443:443 \
+		-v /etc/letsencrypt:/etc/ssl/private \
+        -e SERVER_NAME=www.mydomain.com \
+        -e SERVER_ADMIN=webmaster@mydomain.com \
+        -e SSL_CERT_FILE=/etc/ssl/private/live/www.mydomain.com/cert.pem \
+        -e SSL_PRIVKEY_FILE=/etc/ssl/private/live/www.mydomain.com/privkey.pem \
+        -e SSL_CHAIN_FILE=/etc/ssl/private/live/www.mydomain.com/chain.pem \
+        --link www_container:http \
+        ssl-proxy:4
+
+#### Update letsencrypt.org certificate
+
+Create a cronjob to keep your letsencrypt.org certificate up to date with something like this.
+
+	docker stop my_proxy
+	docker run -it --rm  -p 80:80 -p 443:443 \
+		-v /etc/letsencrypt:/etc/letsencrypt \
+		-v /var/lib/letsencrypt:/var/lib/letsencrypt \
+		quay.io/letsencrypt/letsencrypt:latest --standalone -t renew -q
+	docker start my_proxy
+
+## Environment variables
 
 * `SERVER_NAME` - your full server name - FQDN
 
@@ -113,11 +149,11 @@ ssl-proxy terminates a HTTPS connection for a linked dockers unencrypted web ser
 
 	default: `/etc/ssl/private/chain.pem`
 
-### Volumes
+## Volumes
 
 * `/etc/ssl/private` - where certificate resides
 
-### <a name="naming"></a> Certificate naming
+## <a name="naming"></a> Certificate naming
 
 In `/etc/ssl/private` certificate filename is important to make Apache work with your own certificate. 
 
@@ -137,6 +173,6 @@ Example of getting certificate.
 		-p 80:80 -p 443:443 \
 		-v /etc/letsencrypt:/etc/letsencrypt \
 		-v /var/lib/letsencrypt:/var/lib/letsencrypt \
-		quay.io/letsencrypt/letsencrypt:latest certonly --standalone --agree-tos -t -d $SERVER_NAME -m $SERVER_ADMIN 
+		quay.io/letsencrypt/letsencrypt:latest certonly --standalone --agree-tos -t -d www.mydomain.com -m webmaster@mydomain.com 
 
 ###### vim: set syn=markdown spell spl=en:
