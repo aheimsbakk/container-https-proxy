@@ -4,7 +4,7 @@ ssl-proxy terminates a HTTPS connection for a linked dockers unencrypted web ser
 
 ## Tags
 
-* `4.0`
+* `4`, `4.0`
 
     Updated for easier use with [letsencrypt.org](https://letsencrypt.org), see the new [certificate naming](#naming). Added new environment variables for certificate names
 
