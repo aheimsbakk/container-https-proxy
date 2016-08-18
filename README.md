@@ -4,9 +4,13 @@ ssl-proxy terminates a HTTPS connection for a linked dockers unencrypted web ser
 
 ## Tags
 
-* `latest`
+* `4.0`
 
-    Git master.
+    Updated for easier use with [letsencrypt.org](https://letsencrypt.org), see the new [certificate naming](#naming). Added new environment variables for certificate names
+
+		SSL_CERT_FILE /etc/ssl/private/cert.pem
+		SSL_PRIVKEY_FILE /etc/ssl/private/privkey.pem
+		SSL_CHAIN_FILE /etc/ssl/private/chain.pem
 
 * `3.2`
 
@@ -97,11 +101,23 @@ ssl-proxy terminates a HTTPS connection for a linked dockers unencrypted web ser
 
     default: `80`
 
+* `SSL_CERT_FILE` - name of certificate file
+
+	default: `/etc/ssl/private/cert.pem`
+
+* `SSL_PRIVKEY_FILE` - name of certificate private key file  
+
+	default: `/etc/ssl/private/privkey.pem`
+
+* `SSL_CHAIN_FILE` - name of certificate chain file
+
+	default: `/etc/ssl/private/chain.pem`
+
 ### Volumes
 
 * `/etc/ssl/private` - where certificate resides
 
-### Certificate naming
+### <a name="naming"></a> Certificate naming
 
 In `/etc/ssl/private` certificate filename is important to make Apache work with your own certificate. 
 
@@ -109,7 +125,18 @@ In `/etc/ssl/private` certificate filename is important to make Apache work with
 * Public certificate is `cert.pem`
 * Certificate chain is `chain.pem`
 
+This is the default names used with [letsencrypt.org](https://letsencrypt.org) under your `/etc/letsencrypt/live/$SERVER_NAME` folder.
+
 Get the certificate chain from your CA if you don't have it at hand.
 
+### Getting certificate from [letsencrypt.org](https://letsencrypt.org)
+
+Example of getting certificate.
+
+	docker run -it --rm  \
+		-p 80:80 -p 443:443 \
+		-v /etc/letsencrypt:/etc/letsencrypt \
+		-v /var/lib/letsencrypt:/var/lib/letsencrypt \
+		quay.io/letsencrypt/letsencrypt:latest certonly --standalone --agree-tos -t -d $SERVER_NAME -m $SERVER_ADMIN 
 
 ###### vim: set syn=markdown spell spl=en:
