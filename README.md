@@ -105,9 +105,9 @@ ssl-proxy terminates a HTTPS connection for a linked dockers unencrypted web ser
 
 In `/etc/ssl/private` certificate filename is important to make Apache work with your own certificate. 
 
-* Private key file is `${SERVER_NAME}.key`
-* Public certificate is `${SERVER_NAME}.cert`
-* Certificate chain is `${SERVER_NAME}.chain`
+* Private key file is `privkey.pem`
+* Public certificate is `cert.pem`
+* Certificate chain is `chain.pem`
 
 Get the certificate chain from your CA if you don't have it at hand.
 
