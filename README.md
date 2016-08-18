@@ -1,4 +1,4 @@
-# ssl-proxy / A+ on sslabs.com
+# What is ssl-proxy
 
 ssl-proxy terminates a HTTPS connection for a linked dockers unencrypted web service. If you bind both ssl-proxy ports, 80 and 443 to the host, port 80 will redirect all requests to port 443. 
 
@@ -8,7 +8,7 @@ This docker is configured to get **A+** on [sslabs.com](https://www.ssllabs.com/
 
 * `4`, `4.0`
 
-    Updated for easier use with [letsencrypt.org](https://letsencrypt.org), see the new [certificate naming](#naming). Added new environment variables for certificate names
+    Updated for easier use with [letsencrypt.org](https://letsencrypt.org), see under certificate naming. Added new environment variables for certificate names
 
 		SSL_CERT_FILE /etc/ssl/private/cert.pem
 		SSL_PRIVKEY_FILE /etc/ssl/private/privkey.pem
@@ -153,7 +153,7 @@ Create a cronjob to keep your letsencrypt.org certificate up to date with someth
 
 * `/etc/ssl/private` - where certificate resides
 
-## <a name="naming"></a> Certificate naming
+## Certificate naming
 
 In `/etc/ssl/private` certificate filename is important to make Apache work with your own certificate. 
 
