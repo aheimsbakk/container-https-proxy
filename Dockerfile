@@ -59,7 +59,7 @@ RUN test -f "$SSL_PRIVKEY_FILE" || echo -n NO\\n.\\n.\\n.\\nWaffle Company Inc\\
 VOLUME /etc/ssl/private
 
 # Expose
-EXPOSE 88 443
+EXPOSE 80 443
 
 # Add entrypoint
 COPY docker-entrypoint.sh /
