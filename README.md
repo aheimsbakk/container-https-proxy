@@ -1,8 +1,10 @@
-# What is ssl-proxy
+# What is https-proxy
 
-ssl-proxy terminates a HTTPS connection for a linked dockers unencrypted web service. If you bind both ssl-proxy ports, 80 and 443 to the host, port 80 will redirect all requests to port 443. 
+https-proxy terminates a HTTPS connection for a linked dockers unencrypted web service. If you bind both https-proxy ports, 80 and 443 to the host, port 80 will redirect all requests to port 443.
 
 This docker is configured to get **A+** on [sslabs.com](https://www.ssllabs.com/ssltest/).
+
+**aheimsbakk/https-proxy** is continuance of deprecated *[aheimsbakk/ssl-proxy](https://hub.docker.com/r/aheimsbakk/ssl-proxy/)* 
 
 ## Tags
 
@@ -20,56 +22,42 @@ This docker is configured to get **A+** on [sslabs.com](https://www.ssllabs.com/
 
 		RequestHeader unset Proxy early
 
-* `3.1`
-
-    Give the application a hint that it receives connection from a ssl proxy.
+## Changelog
+ 
+* 3.1: Give the application a hint that it receives connection from a ssl proxy.
 
         RequestHeader set X-Forwarded-Proto "https"
 
-* `3.0`
-
-    Added ability to redirect multiple ports.
-    New environment varibles as following.
+* 3.0: Added ability to redirect multiple ports. New environment varibles as following.
 
         PORT_HTTP 80
         PORT_HTTPS 443
         PORT_REDIRECT 80
 
-* `2.1`
+* 2.1: Fixed generation of private SSL cert during build. Added certificate stapling in SSL config.
 
-    Fixed generation of private SSL cert during build. 
-    Added certificate stapling in SSL config.
+        SSLUseStapling on
+        SSLStaplingCache "shmcb:logs/stapling-cache(150000)"
+        SSLStaplingResponseMaxAge 900
 
-        SSLUseStapling on 
-        SSLStaplingCache "shmcb:logs/stapling-cache(150000)" 
-        SSLStaplingResponseMaxAge 900 
-
-    Set SSL compression off in SSL config.
+* 2.1: Set SSL compression off in SSL config.
 
         SSLCompression off
 
-* `2.0`
-
-    Apache header hardening with the following.
+* 2.0: Apache header hardening with the following.
 
         Header set X-Content-Type-Options "nosniff"
         Header set X-XSS-Protection "1; mode=block"
         Header set X-Robots-Tag "none"
         Header set X-Frame-Options "SAMEORIGIN"
 
-* `1.1`
+* 1.1: Added ProxyPreserveHost to config.
 
-    Added ProxyPreserveHost to config. 
+* 1.0.1: Updated documentation for docker.
 
-* `1.0.1`
+* 1.0: Basic customizable SSL proxy based on `debian:jessie` and jessies version of Apache. Proxying port 80 is supported in this version.
 
-    Updated documentation for docker. 
-
-* `1.0`
-
-    Basic customizable SSL proxy based on `debian:jessie` and jessies version of Apache. Proxying port 80 is supported in this version.
-
-## Start ssl-proxy
+## Start https-proxy
 
 ### For testing
 
@@ -78,13 +66,13 @@ This docker is configured to get **A+** on [sslabs.com](https://www.ssllabs.com/
         -e SERVER_NAME=www.mydomain.com \
         -e SERVER_ADMIN=webmaster@mydomain.com \
         --link www_container:http \
-		ssl-proxy:4
+		aheimsbakk/https-proxy:4
 
 ### With letsencrypt.org certificate
 
 #### Start docker
 
-Start the docker with referering to letsencrypt.org certificate. 
+Start the docker with referering to letsencrypt.org certificate.
 
 	docker run -d --name my_proxy -p 80:80 -p 443:443 \
 		-v /etc/letsencrypt:/etc/ssl/private \
@@ -94,7 +82,7 @@ Start the docker with referering to letsencrypt.org certificate.
         -e SSL_PRIVKEY_FILE=/etc/ssl/private/live/www.mydomain.com/privkey.pem \
         -e SSL_CHAIN_FILE=/etc/ssl/private/live/www.mydomain.com/chain.pem \
         --link www_container:http \
-        ssl-proxy:4
+        aheimsbakk/https-proxy:4
 
 #### Update letsencrypt.org certificate
 
@@ -113,7 +101,7 @@ Create a cronjob to keep your letsencrypt.org certificate up to date with someth
 
     default: `localhost`
 
-* `SERVER_ADMIN` - your webmaster email 
+* `SERVER_ADMIN` - your webmaster email
 
     default `webmaster@${SERVER_NAME}`
 
@@ -141,7 +129,7 @@ Create a cronjob to keep your letsencrypt.org certificate up to date with someth
 
 	default: `/etc/ssl/private/cert.pem`
 
-* `SSL_PRIVKEY_FILE` - name of certificate private key file  
+* `SSL_PRIVKEY_FILE` - name of certificate private key file
 
 	default: `/etc/ssl/private/privkey.pem`
 
@@ -155,7 +143,7 @@ Create a cronjob to keep your letsencrypt.org certificate up to date with someth
 
 ## Certificate naming
 
-In `/etc/ssl/private` certificate filename is important to make Apache work with your own certificate. 
+In `/etc/ssl/private` certificate filename is important to make Apache work with your own certificate.
 
 * Private key file is `privkey.pem`
 * Public certificate is `cert.pem`
@@ -173,6 +161,6 @@ Example of getting certificate.
 		-p 80:80 -p 443:443 \
 		-v /etc/letsencrypt:/etc/letsencrypt \
 		-v /var/lib/letsencrypt:/var/lib/letsencrypt \
-		quay.io/letsencrypt/letsencrypt:latest certonly --standalone --agree-tos -t -d www.mydomain.com -m webmaster@mydomain.com 
+		quay.io/letsencrypt/letsencrypt:latest certonly --standalone --agree-tos -t -d www.mydomain.com -m webmaster@mydomain.com
 
 ###### vim: set syn=markdown spell spl=en:
