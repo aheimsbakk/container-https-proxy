@@ -4,7 +4,7 @@ https-proxy terminates a HTTPS connection for a linked dockers unencrypted web s
 
 This docker is configured to get **A+** on [sslabs.com](https://www.ssllabs.com/ssltest/).
 
-**aheimsbakk/https-proxy** is continuance of deprecated *[aheimsbakk/ssl-proxy](https://hub.docker.com/r/aheimsbakk/ssl-proxy/)* 
+**aheimsbakk/https-proxy** is continuance of deprecated *[aheimsbakk/ssl-proxy](https://hub.docker.com/r/aheimsbakk/ssl-proxy/)*
 
 ## Tags
 
@@ -23,7 +23,7 @@ This docker is configured to get **A+** on [sslabs.com](https://www.ssllabs.com/
 		RequestHeader unset Proxy early
 
 ## Changelog
- 
+
 * 3.1: Give the application a hint that it receives connection from a ssl proxy.
 
         RequestHeader set X-Forwarded-Proto "https"
@@ -136,6 +136,10 @@ Create a cronjob to keep your letsencrypt.org certificate up to date with someth
 * `SSL_CHAIN_FILE` - name of certificate chain file
 
 	default: `/etc/ssl/private/chain.pem`
+
+* `PROXYPASS_CONFIG` - Additional configuration for the ProxyPass directive.  See [the Apache Proxypass documentation](https://httpd.apache.org/docs/2.4/mod/mod_proxy.html#proxypass).
+
+    default: `retry=60`
 
 ## Volumes
 
