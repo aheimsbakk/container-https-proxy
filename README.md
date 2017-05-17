@@ -10,7 +10,7 @@ This docker is configured to get **A+** on [sslabs.com](https://www.ssllabs.com/
 
 * `4`, `4.1`
 
-    Pull request from [triplepoint](https://github.com/triplepoint): Dockerfile	Add proxypass configuration option as an environment variable. Proxypass directive is now configurable, see Apache `mod_proxy` [proxypass](https://httpd.apache.org/docs/2.4/mod/mod_proxy.html#proxypass) directive for more information. 
+    Pull request from [triplepoint](https://github.com/triplepoint): Dockerfile	Add proxypass configuration option as an environment variable. ProxyPass directive is now configurable, see Apache `mod_proxy` [ProxyPass](https://httpd.apache.org/docs/2.4/mod/mod_proxy.html#proxypass) directive for more information. 
 
         PROXYPASS_CONFIG retry=60
 
@@ -143,7 +143,7 @@ Create a cronjob to keep your letsencrypt.org certificate up to date with someth
 
 	default: `/etc/ssl/private/chain.pem`
 
-* `PROXYPASS_CONFIG` - Additional configuration for the ProxyPass directive.  See [the Apache Proxypass documentation](https://httpd.apache.org/docs/2.4/mod/mod_proxy.html#proxypass).
+* `PROXYPASS_CONFIG` - additional configuration for the ProxyPass directive, see the Apache [ProxyPass](https://httpd.apache.org/docs/2.4/mod/mod_proxy.html#proxypass) documentation.
 
     default: `retry=60`
 
