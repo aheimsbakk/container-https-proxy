@@ -10,7 +10,7 @@ This docker is configured to get **A+** on [sslabs.com](https://www.ssllabs.com/
 
 * `4`, `4.1`
 
-    Pull request from [triplepoint](https://github.com/triplepoint): Dockerfile	Add proxypass configuration option as an environment variable. Proxypass directive is now configurable, see Apache `mod_proxy` [proxypass](https://httpd.apache.org/docs/2.4/mod/mod_proxy.html#proxypass) directive for more information. Defaults to `proxypass` default. 
+    Pull request from [triplepoint](https://github.com/triplepoint): Dockerfile	Add proxypass configuration option as an environment variable. Proxypass directive is now configurable, see Apache `mod_proxy` [proxypass](https://httpd.apache.org/docs/2.4/mod/mod_proxy.html#proxypass) directive for more information. 
 
         PROXYPASS_CONFIG retry=60
 
