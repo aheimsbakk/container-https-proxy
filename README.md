@@ -4,11 +4,17 @@ https-proxy terminates a HTTPS connection for a linked dockers unencrypted web s
 
 This docker is configured to get **A+** on [sslabs.com](https://www.ssllabs.com/ssltest/).
 
-**aheimsbakk/https-proxy** is continuance of deprecated *[aheimsbakk/ssl-proxy](https://hub.docker.com/r/aheimsbakk/ssl-proxy/)* 
+**aheimsbakk/https-proxy** is continuance of deprecated *[aheimsbakk/ssl-proxy](https://hub.docker.com/r/aheimsbakk/ssl-proxy/)*
 
 ## Tags
 
-* `4`, `4.0`
+* `4`, `4.1`
+
+    Pull request from [triplepoint](https://github.com/triplepoint): Dockerfile	Add proxypass configuration option as an environment variable. ProxyPass directive is now configurable, see Apache `mod_proxy` [ProxyPass](https://httpd.apache.org/docs/2.4/mod/mod_proxy.html#proxypass) directive for more information. 
+
+        PROXYPASS_CONFIG retry=60
+
+* `4.0`
 
     Updated for easier use with [letsencrypt.org](https://letsencrypt.org), see under certificate naming. Added new environment variables for certificate names
 
@@ -23,7 +29,7 @@ This docker is configured to get **A+** on [sslabs.com](https://www.ssllabs.com/
 		RequestHeader unset Proxy early
 
 ## Changelog
- 
+
 * 3.1: Give the application a hint that it receives connection from a ssl proxy.
 
         RequestHeader set X-Forwarded-Proto "https"
@@ -136,6 +142,10 @@ Create a cronjob to keep your letsencrypt.org certificate up to date with someth
 * `SSL_CHAIN_FILE` - name of certificate chain file
 
 	default: `/etc/ssl/private/chain.pem`
+
+* `PROXYPASS_CONFIG` - additional configuration for the ProxyPass directive, see the Apache [ProxyPass](https://httpd.apache.org/docs/2.4/mod/mod_proxy.html#proxypass) documentation.
+
+    default: `retry=60`
 
 ## Volumes
 
