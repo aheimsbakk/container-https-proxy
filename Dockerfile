@@ -4,7 +4,7 @@
 #
 
 # Use oldee stable
-FROM debian:jessie
+FROM debian:jessie-slim
 
 # Yep thats me, please use +docker tag to help me find the mail
 MAINTAINER Arnulf Heimsakk "arnulf.heimsbakk+docker@gmail.com"
@@ -35,7 +35,7 @@ ENV SSL_PRIVKEY_FILE /etc/ssl/private/privkey.pem
 ENV SSL_CHAIN_FILE /etc/ssl/private/chain.pem
 
 # Install apache2 and haveged for entropy
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y install apache2 openssl haveged && apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y install apache2 openssl && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Configure apache servername
 RUN echo ServerName \${SERVER_NAME} > /etc/apache2/conf-available/servername.conf
