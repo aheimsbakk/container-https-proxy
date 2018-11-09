@@ -8,6 +8,10 @@ This docker is configured to get **A+** on [sslabs.com](https://www.ssllabs.com/
 
 ## Tags
 
+* `5`
+
+    Upped to Debian Buster.
+
 * `4`, `4.1`
 
     Pull request from [triplepoint](https://github.com/triplepoint): Dockerfile	Add proxypass configuration option as an environment variable. ProxyPass directive is now configurable, see Apache `mod_proxy` [ProxyPass](https://httpd.apache.org/docs/2.4/mod/mod_proxy.html#proxypass) directive for more information. 
