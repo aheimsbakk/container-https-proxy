@@ -8,7 +8,13 @@ This docker is configured to get **A+** on [sslabs.com](https://www.ssllabs.com/
 
 ## Tags
 
-* `6`
+* `6`, `6.1`
+
+    Apache hardening.
+
+        Header set Referrer-Policy "strict-origin"
+
+* `6.0`
 
     Upped to Debian Stable slim base image.
 
