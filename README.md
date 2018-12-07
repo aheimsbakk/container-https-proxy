@@ -8,6 +8,10 @@ This docker is configured to get **A+** on [sslabs.com](https://www.ssllabs.com/
 
 ## Tags
 
+* `6`
+
+    Upped to Debian Stable slim base image.
+
 * `5`
 
     Upped to Debian Buster.
