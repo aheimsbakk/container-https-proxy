@@ -14,13 +14,36 @@ This docker is configured to get **A+** on [sslabs.com](https://www.ssllabs.com/
 
         Header set Referrer-Policy "strict-origin"
 
+## Changelog, historic tags
+
+* `6.0`
+
+    Upped to Debian Stable slim base image.
+
+* `5`
+
+    Upped to Debian Buster.
+
+* `4`, `4.1`
+
+    Pull request from [triplepoint](https://github.com/triplepoint): Dockerfile Add proxypass configuration option as an environment variable. ProxyPass directive is now configurable, see Apache `mod_proxy` [ProxyPass](https://httpd.apache.org/docs/2.4/mod/mod_proxy.html#proxypass) directive for more information.
+
+        PROXYPASS_CONFIG retry=60
+
+* `4.0`
+
+    Updated for easier use with [letsencrypt.org](https://letsencrypt.org), see under certificate naming. Added new environment variables for certificate names
+
+        SSL_CERT_FILE /etc/ssl/private/cert.pem
+        SSL_PRIVKEY_FILE /etc/ssl/private/privkey.pem
+        SSL_CHAIN_FILE /etc/ssl/private/chain.pem
+
 * `3.2`
 
-	Added recommendations from [httpoxy.org](https://httpoxy.org/).
+    Added recommendations from [httpoxy.org](https://httpoxy.org/).
 
-		RequestHeader unset Proxy early
+        RequestHeader unset Proxy early
 
-## Changelog
 
 * 3.1: Give the application a hint that it receives connection from a ssl proxy.
 
@@ -60,11 +83,11 @@ This docker is configured to get **A+** on [sslabs.com](https://www.ssllabs.com/
 ### For testing
 
     docker run -d --name my_proxy -p 80:80 -p 443:443 \
-		-v ./my_certs:/etc/ssl/private \
+    -v ./my_certs:/etc/ssl/private \
         -e SERVER_NAME=www.mydomain.com \
         -e SERVER_ADMIN=webmaster@mydomain.com \
         --link www_container:http \
-		aheimsbakk/https-proxy:4
+    aheimsbakk/https-proxy:4
 
 ### With letsencrypt.org certificate
 
@@ -72,8 +95,8 @@ This docker is configured to get **A+** on [sslabs.com](https://www.ssllabs.com/
 
 Start the docker with referering to letsencrypt.org certificate.
 
-	docker run -d --name my_proxy -p 80:80 -p 443:443 \
-		-v /etc/letsencrypt:/etc/ssl/private \
+  docker run -d --name my_proxy -p 80:80 -p 443:443 \
+    -v /etc/letsencrypt:/etc/ssl/private \
         -e SERVER_NAME=www.mydomain.com \
         -e SERVER_ADMIN=webmaster@mydomain.com \
         -e SSL_CERT_FILE=/etc/ssl/private/live/www.mydomain.com/cert.pem \
@@ -86,12 +109,12 @@ Start the docker with referering to letsencrypt.org certificate.
 
 Create a cronjob to keep your letsencrypt.org certificate up to date with something like this.
 
-	docker stop my_proxy
-	docker run -it --rm  -p 80:80 -p 443:443 \
-		-v /etc/letsencrypt:/etc/letsencrypt \
-		-v /var/lib/letsencrypt:/var/lib/letsencrypt \
-		quay.io/letsencrypt/letsencrypt:latest --standalone -t renew -q
-	docker start my_proxy
+  docker stop my_proxy
+  docker run -it --rm  -p 80:80 -p 443:443 \
+    -v /etc/letsencrypt:/etc/letsencrypt \
+    -v /var/lib/letsencrypt:/var/lib/letsencrypt \
+    quay.io/letsencrypt/letsencrypt:latest --standalone -t renew -q
+  docker start my_proxy
 
 ## Environment variables
 
@@ -125,15 +148,15 @@ Create a cronjob to keep your letsencrypt.org certificate up to date with someth
 
 * `SSL_CERT_FILE` - name of certificate file
 
-	default: `/etc/ssl/private/cert.pem`
+  default: `/etc/ssl/private/cert.pem`
 
 * `SSL_PRIVKEY_FILE` - name of certificate private key file
 
-	default: `/etc/ssl/private/privkey.pem`
+  default: `/etc/ssl/private/privkey.pem`
 
 * `SSL_CHAIN_FILE` - name of certificate chain file
 
-	default: `/etc/ssl/private/chain.pem`
+  default: `/etc/ssl/private/chain.pem`
 
 * `PROXYPASS_CONFIG` - additional configuration for the ProxyPass directive, see the Apache [ProxyPass](https://httpd.apache.org/docs/2.4/mod/mod_proxy.html#proxypass) documentation.
 
@@ -159,10 +182,10 @@ Get the certificate chain from your CA if you don't have it at hand.
 
 Example of getting certificate.
 
-	docker run -it --rm  \
-		-p 80:80 -p 443:443 \
-		-v /etc/letsencrypt:/etc/letsencrypt \
-		-v /var/lib/letsencrypt:/var/lib/letsencrypt \
-		quay.io/letsencrypt/letsencrypt:latest certonly --standalone --agree-tos -t -d www.mydomain.com -m webmaster@mydomain.com
+  docker run -it --rm  \
+    -p 80:80 -p 443:443 \
+    -v /etc/letsencrypt:/etc/letsencrypt \
+    -v /var/lib/letsencrypt:/var/lib/letsencrypt \
+    quay.io/letsencrypt/letsencrypt:latest certonly --standalone --agree-tos -t -d www.mydomain.com -m webmaster@mydomain.com
 
 ###### vim: set syn=markdown spell spl=en:
