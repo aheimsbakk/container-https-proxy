@@ -1,10 +1,10 @@
-# What is https-proxy
+# https-proxy
+
+**This repository is for historic purposes only**. Use [traefik](https://doc.traefik.io/traefik/) or another sensible https proxy.
 
 https-proxy terminates a HTTPS connection for a linked dockers unencrypted web service. If you bind both https-proxy ports, 80 and 443 to the host, port 80 will redirect all requests to port 443.
 
 This docker is configured to get **A+** on [sslabs.com](https://www.ssllabs.com/ssltest/).
-
-**aheimsbakk/https-proxy** is continuance of deprecated *[aheimsbakk/ssl-proxy](https://hub.docker.com/r/aheimsbakk/ssl-proxy/)*
 
 ## Tags
 
@@ -13,28 +13,6 @@ This docker is configured to get **A+** on [sslabs.com](https://www.ssllabs.com/
     Apache hardening.
 
         Header set Referrer-Policy "strict-origin"
-
-* `6.0`
-
-    Upped to Debian Stable slim base image.
-
-* `5`
-
-    Upped to Debian Buster.
-
-* `4`, `4.1`
-
-    Pull request from [triplepoint](https://github.com/triplepoint): Dockerfile	Add proxypass configuration option as an environment variable. ProxyPass directive is now configurable, see Apache `mod_proxy` [ProxyPass](https://httpd.apache.org/docs/2.4/mod/mod_proxy.html#proxypass) directive for more information. 
-
-        PROXYPASS_CONFIG retry=60
-
-* `4.0`
-
-    Updated for easier use with [letsencrypt.org](https://letsencrypt.org), see under certificate naming. Added new environment variables for certificate names
-
-		SSL_CERT_FILE /etc/ssl/private/cert.pem
-		SSL_PRIVKEY_FILE /etc/ssl/private/privkey.pem
-		SSL_CHAIN_FILE /etc/ssl/private/chain.pem
 
 * `3.2`
 

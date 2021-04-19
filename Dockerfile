@@ -4,7 +4,7 @@
 #
 
 # Use oldee stable
-FROM debian:stable-slim
+FROM aheimsbakk/base-debian:latest
 
 # Yep thats me, please use +docker tag to help me find the mail
 MAINTAINER Arnulf Heimsakk "arnulf.heimsbakk+docker@gmail.com"
